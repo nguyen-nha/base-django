@@ -1,34 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <title>Boards</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   </head>
   <body>
-    <h1>Boards</h1>
-
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Board</th>
-          <th>Posts</th>
-          <th>Topics</th>
-          <th>Last Post</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for board in boards %}
-          <tr>
-            <td>
-              {{ board.name }}<br>
-              <small style="color: #888">{{ board.description }}</small>
-            </td>
-            <td>0</td>
-            <td>0</td>
-            <td></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <!-- body suppressed for brevity ... -->
   </body>
+</html>
 </html>
