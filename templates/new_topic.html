@@ -1,24 +1,34 @@
-{% extends 'base.html' %}
+<form method="post" novalidate>
+  {% csrf_token %}
 
-{% block title %}Start a New Topic{% endblock %}
-
-{% block breadcrumb %}
-  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
-  <li class="breadcrumb-item active">New topic</li>
-{% endblock %}
-
-{% block content %}
-  <form method="post">
-    {% csrf_token %}
+  {% for field in form %}
     <div class="form-group">
-      <label for="id_subject">Subject</label>
-      <input type="text" class="form-control" id="id_subject" name="subject">
+      {{ field.label_tag }}
+
+      {% if form.is_bound %}
+        {% if field.errors %}
+
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+            <div class="invalid-feedback">
+              {{ error }}
+            </div>
+          {% endfor %}
+
+        {% else %}
+          {% render_field field class="form-control is-valid" %}
+        {% endif %}
+      {% else %}
+        {% render_field field class="form-control" %}
+      {% endif %}
+
+      {% if field.help_text %}
+        <small class="form-text text-muted">
+          {{ field.help_text }}
+        </small>
+      {% endif %}
     </div>
-    <div class="form-group">
-      <label for="id_message">Message</label>
-      <textarea class="form-control" id="id_message" name="message" rows="5"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Post</button>
-  </form>
-{% endblock %}
+  {% endfor %}
+
+  <button type="submit" class="btn btn-success">Post</button>
+</form>
