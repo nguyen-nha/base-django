@@ -1,34 +1,17 @@
-<form method="post" novalidate>
-  {% csrf_token %}
+{% extends 'base.html' %}
 
-  {% for field in form %}
-    <div class="form-group">
-      {{ field.label_tag }}
+{% block title %}Start a New Topic{% endblock %}
 
-      {% if form.is_bound %}
-        {% if field.errors %}
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
+  <li class="breadcrumb-item active">New topic</li>
+{% endblock %}
 
-          {% render_field field class="form-control is-invalid" %}
-          {% for error in field.errors %}
-            <div class="invalid-feedback">
-              {{ error }}
-            </div>
-          {% endfor %}
-
-        {% else %}
-          {% render_field field class="form-control is-valid" %}
-        {% endif %}
-      {% else %}
-        {% render_field field class="form-control" %}
-      {% endif %}
-
-      {% if field.help_text %}
-        <small class="form-text text-muted">
-          {{ field.help_text }}
-        </small>
-      {% endif %}
-    </div>
-  {% endfor %}
-
-  <button type="submit" class="btn btn-success">Post</button>
-</form>
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Post</button>
+  </form>
+{% endblock %}
